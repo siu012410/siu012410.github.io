@@ -5,12 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>화질 높이고 싶지 않으세요? - 무료 AI 이미지 화질·해상도 개선</title>
   <meta name="description" content="흐릿한 사진을 AI로 선명하게. 설치·가입 없이 브라우저에서 무료로 사진 화질을 개선하고 해상도를 2배·4배 높이세요. 사진은 서버로 전송되지 않습니다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
   <link rel="stylesheet" href="style.css">
   <script src="ads.js" defer></script>
 </head>
 <body>
+  <!-- 배경에 떠다니는 빛 -->
+  <div class="glow-bg" aria-hidden="true">
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  </div>
+
   <header class="site-header">
-    <a class="logo" href="index.html">화질 높이고 싶지 않으세요?</a>
+    <a class="logo" href="index.html"><span class="logo-mark">✦</span> 화질 높이고 싶지 않으세요?</a>
   </header>
 
   <!-- 광고 자리 1: 상단 배너 -->
@@ -18,27 +26,46 @@
 
   <div class="layout">
     <main>
-      <h1>흐릿한 사진, AI로 선명하게</h1>
-      <p class="meta">사진은 내 컴퓨터 안에서만 처리되고 서버로 올라가지 않습니다.</p>
+      <section class="hero">
+        <p class="eyebrow">AI 사진 화질 개선 · 100% 무료</p>
+        <h1>흐릿한 사진,<br><span class="grad-text">AI로 선명하게</span></h1>
+        <p class="lead">설치도, 가입도 필요 없어요. 사진을 올리면 AI가 디테일을 되살려 드려요.</p>
+        <p class="maker">🧑‍💻 <strong>13살 개발자</strong>가 만들었어요</p>
+        <ul class="badges">
+          <li>⚡ 설치 없음</li>
+          <li>🔒 사진 업로드 안 됨</li>
+          <li>🔍 최대 8배 확대</li>
+          <li>💎 ESRGAN AI</li>
+        </ul>
+      </section>
 
-      <div class="tool">
+      <div class="tool card">
         <label class="drop" id="drop">
           <input type="file" id="file" accept="image/*" hidden>
+          <span class="drop-icon" aria-hidden="true">🖼️</span>
           <span id="drop-text">여기를 눌러 사진을 고르거나, 사진을 끌어다 놓으세요</span>
+          <span class="drop-hint">JPG · PNG · WEBP</span>
         </label>
 
         <div class="controls">
-          <span>크기:</span>
-          <label><input type="radio" name="scale" value="1"> 그대로 (화질만 개선)</label>
-          <label><input type="radio" name="scale" value="2" checked> 2배</label>
-          <label><input type="radio" name="scale" value="4"> 4배</label>
+          <span class="control-label">크기</span>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="scale" value="1"><span>그대로 <small>화질만 개선</small></span></label>
+            <label class="chip"><input type="radio" name="scale" value="2" checked><span>2배</span></label>
+            <label class="chip"><input type="radio" name="scale" value="4"><span>4배</span></label>
+            <label class="chip"><input type="radio" name="scale" value="8"><span>8배 <small>작은 사진용</small></span></label>
+          </div>
         </div>
         <div class="controls">
-          <span>화질:</span>
-          <label><input type="radio" name="quality" value="medium" checked> 보통 (빠름)</label>
-          <label><input type="radio" name="quality" value="thick"> 최고 화질 (느림, 처음에 약 30MB 다운로드)</label>
+          <span class="control-label">화질</span>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="quality" value="medium"><span>보통 <small>빠름</small></span></label>
+            <label class="chip"><input type="radio" name="quality" value="thick"><span>💎 고화질 <small>느림</small></span></label>
+            <label class="chip"><input type="radio" name="quality" value="max" checked><span>🔥 최대 화질 <small>가장 선명 · 가장 느림</small></span></label>
+          </div>
         </div>
-        <button id="run" disabled>화질 높이기</button>
+
+        <button id="run" class="cta" disabled>✨ 화질 높이기</button>
 
         <div class="progress" id="progress" hidden>
           <div class="bar"><div class="fill" id="fill"></div></div>
@@ -47,28 +74,31 @@
         </div>
 
         <div class="compare" id="compare" hidden>
-          <figure>
-            <figcaption id="before-label">원본</figcaption>
+          <div class="compare-labels">
+            <span id="before-label">원본</span>
+            <span id="after-label">결과</span>
+          </div>
+          <div class="stage" id="stage">
             <img id="before" alt="원본 이미지">
-          </figure>
-          <figure>
-            <figcaption id="after-label">결과</figcaption>
-            <img id="after" alt="해상도를 높인 이미지">
-          </figure>
+            <img id="after" alt="화질을 높인 이미지">
+            <div class="handle" aria-hidden="true"><span>⇆</span></div>
+            <input type="range" id="slider" min="0" max="100" value="50" aria-label="원본과 결과 비교">
+          </div>
+          <p class="compare-hint">가운데 막대를 좌우로 밀어서 원본과 결과를 비교해 보세요</p>
         </div>
 
-        <a id="download" class="button" download hidden>결과 이미지 저장</a>
+        <a id="download" class="cta download" download hidden>⬇ 결과 이미지 저장</a>
       </div>
 
       <!-- 광고 자리 2: 도구 아래 (결과를 기다리는 동안 보임) -->
       <div class="ad-slot" data-ad-slot-id=""></div>
 
-      <article>
+      <article class="card info">
         <h2>사용 방법</h2>
-        <ol>
-          <li>해상도를 높일 사진을 고릅니다.</li>
-          <li>크기를 고릅니다. "그대로"는 크기는 두고 흐림과 노이즈만 줄이고, 2배·4배는 크게 키웁니다.</li>
-          <li>화질을 고릅니다. "최고 화질"은 더 선명하지만 훨씬 오래 걸립니다.</li>
+        <ol class="steps">
+          <li>화질을 높일 사진을 고릅니다.</li>
+          <li>크기를 고릅니다. "그대로"는 크기는 두고 흐림과 노이즈만 줄이고, 2배·4배·8배는 크게 키웁니다. 8배는 AI를 두 번 돌려서 작은 사진에 좋습니다.</li>
+          <li>화질을 고릅니다. "최대 화질"은 가장 큰 AI 모델에 조각 경계 보정과 선명도 마무리까지 더해 가장 선명하지만, 가장 오래 걸립니다. 빨리 보고 싶다면 "보통"을 고르세요.</li>
           <li>"화질 높이기"를 누르고 기다린 뒤 결과를 저장합니다.</li>
         </ol>
         <h2>알아 두면 좋은 점</h2>
@@ -88,6 +118,7 @@
   </div>
 
   <footer class="site-footer">
+    <p class="footer-maker">🧑‍💻 13살 개발자가 만들었어요</p>
     <p>© 2026 화질 높이고 싶지 않으세요? · 문의: <a href="mailto:seungyoon17@gmail.com">seungyoon17@gmail.com</a> · <a href="privacy.html">개인정보처리방침</a></p>
   </footer>
 
