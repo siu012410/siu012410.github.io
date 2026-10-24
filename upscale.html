@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI 이미지 해상도 높이기 - 내 사이트</title>
-  <meta name="description" content="사진을 올리면 AI가 해상도를 2배·4배로 높여 줍니다. 무료이고 사진은 서버로 전송되지 않습니다.">
+  <title>AI 이미지 화질·해상도 높이기 - 내 사이트</title>
+  <meta name="description" content="사진을 올리면 AI가 화질을 개선하고 해상도를 2배·4배로 높여 줍니다. 무료이고 사진은 서버로 전송되지 않습니다.">
   <link rel="stylesheet" href="style.css">
   <script src="ads.js" defer></script>
 </head>
@@ -23,7 +23,7 @@
 
   <div class="layout">
     <main>
-      <h1>AI 이미지 해상도 높이기</h1>
+      <h1>AI 이미지 화질·해상도 높이기</h1>
       <p class="meta">사진은 내 컴퓨터 안에서만 처리되고 서버로 올라가지 않습니다.</p>
 
       <div class="tool">
@@ -33,11 +33,17 @@
         </label>
 
         <div class="controls">
-          <span>배율:</span>
-          <label><input type="radio" name="scale" value="2" checked> 2배 (빠름)</label>
-          <label><input type="radio" name="scale" value="4"> 4배 (선명, 느림)</label>
-          <button id="run" disabled>해상도 높이기</button>
+          <span>크기:</span>
+          <label><input type="radio" name="scale" value="1"> 그대로 (화질만 개선)</label>
+          <label><input type="radio" name="scale" value="2" checked> 2배</label>
+          <label><input type="radio" name="scale" value="4"> 4배</label>
         </div>
+        <div class="controls">
+          <span>화질:</span>
+          <label><input type="radio" name="quality" value="medium" checked> 보통 (빠름)</label>
+          <label><input type="radio" name="quality" value="thick"> 최고 화질 (느림, 처음에 약 30MB 다운로드)</label>
+        </div>
+        <button id="run" disabled>화질 높이기</button>
 
         <div class="progress" id="progress" hidden>
           <div class="bar"><div class="fill" id="fill"></div></div>
@@ -65,8 +71,9 @@
         <h2>사용 방법</h2>
         <ol>
           <li>해상도를 높일 사진을 고릅니다.</li>
-          <li>배율을 고릅니다. 2배는 빠르고, 4배는 더 크게 키웁니다.</li>
-          <li>"해상도 높이기"를 누르고 기다린 뒤 결과를 저장합니다.</li>
+          <li>크기를 고릅니다. "그대로"는 크기는 두고 흐림과 노이즈만 줄이고, 2배·4배는 크게 키웁니다.</li>
+          <li>화질을 고릅니다. "최고 화질"은 더 선명하지만 훨씬 오래 걸립니다.</li>
+          <li>"화질 높이기"를 누르고 기다린 뒤 결과를 저장합니다.</li>
         </ol>
         <h2>알아 두면 좋은 점</h2>
         <ul>
@@ -92,6 +99,8 @@
   <script src="https://cdn.jsdelivr.net/npm/upscaler@1.0.0/dist/browser/umd/upscaler.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@upscalerjs/esrgan-medium@1.0.0/dist/umd/models/esrgan-medium/src/x2/index.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@upscalerjs/esrgan-medium@1.0.0/dist/umd/models/esrgan-medium/src/x4/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@upscalerjs/esrgan-thick@1.0.0/dist/umd/models/esrgan-thick/src/x2/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@upscalerjs/esrgan-thick@1.0.0/dist/umd/models/esrgan-thick/src/x4/index.min.js"></script>
   <script src="upscale.js"></script>
 </body>
 </html>

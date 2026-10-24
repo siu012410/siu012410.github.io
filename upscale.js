@@ -14,14 +14,34 @@
   const afterLabel = document.getElementById('after-label');
   const download = document.getElementById('download');
 
-  // 모델은 배율별로 한 번만 만들어 재사용
+  // 화질(보통/최고)과 배율별 AI 모델
+  const MODELS = {
+    medium: { 2: window.ESRGANMedium2x, 4: window.ESRGANMedium4x },
+    thick: { 2: window.ESRGANThick2x, 4: window.ESRGANThick4x },
+  };
+
+  // 모델은 한 번만 만들어 재사용
   const upscalers = {};
-  function getUpscaler(scale) {
-    if (!upscalers[scale]) {
-      const model = scale === 4 ? window.ESRGANMedium4x : window.ESRGANMedium2x;
-      upscalers[scale] = new window.Upscaler({ model: model });
+  function getUpscaler(quality, scale) {
+    const key = quality + scale;
+    if (!upscalers[key]) {
+      upscalers[key] = new window.Upscaler({ model: MODELS[quality][scale] });
     }
-    return upscalers[scale];
+    return upscalers[key];
+  }
+
+  // AI로 키운 이미지를 원본 크기로 다시 줄임 (흐림·노이즈만 줄어든 효과)
+  async function resizeTo(dataUrl, width, height) {
+    const img = new Image();
+    img.src = dataUrl;
+    await img.decode();
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, width, height);
+    return canvas.toDataURL('image/png');
   }
 
   let fileName = 'image';
@@ -56,16 +76,19 @@
 
   runBtn.addEventListener('click', async function () {
     const scale = Number(document.querySelector('input[name="scale"]:checked').value);
+    const quality = document.querySelector('input[name="quality"]:checked').value;
     runBtn.disabled = true;
     progress.hidden = false;
     fill.style.width = '0%';
     status.textContent = 'AI 모델 불러오는 중… (처음 한 번만 오래 걸려요)';
 
     try {
-      const upscaler = getUpscaler(scale);
+      // "그대로"는 2배로 키운 뒤 원래 크기로 되돌림
+      const upscaler = getUpscaler(quality, scale === 1 ? 2 : scale);
       await upscaler.getModel();
       status.textContent = '처리 중… 0%';
-      const result = await upscaler.upscale(before, {
+      // 화면에 표시된 크기가 아니라 원본 크기로 처리하도록 img 요소 대신 src를 넘김
+      let result = await upscaler.upscale(before.src, {
         patchSize: 64,   // 작은 조각으로 나눠 처리해 메모리 부족을 막음
         padding: 4,
         progress: function (p) {
@@ -74,13 +97,16 @@
           status.textContent = '처리 중… ' + pct + '%';
         },
       });
+      if (scale === 1) {
+        result = await resizeTo(result, before.naturalWidth, before.naturalHeight);
+      }
 
       after.onload = function () {
         afterLabel.textContent = '결과 (' + after.naturalWidth + ' × ' + after.naturalHeight + ')';
       };
       after.src = result;
       download.href = result;
-      download.download = fileName + '_x' + scale + '.png';
+      download.download = fileName + (scale === 1 ? '_enhanced' : '_x' + scale) + '.png';
       download.hidden = false;
       fill.style.width = '100%';
       status.textContent = '완료!';
