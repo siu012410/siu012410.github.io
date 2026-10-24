@@ -7,17 +7,19 @@
   <meta name="description" content="흐릿한 사진을 선명하게. 설치·가입 없이 브라우저에서 무료로 사진 화질을 개선하고 해상도를 2배·4배·8배로 높이세요. 사진은 서버로 전송되지 않습니다.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&family=Noto+Serif+KR:wght@400;600;700&display=swap">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7787868266002256" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=5">
   <script src="ads.js?v=2" defer></script>
 </head>
 <body>
   <header class="masthead">
-    <p class="masthead-top"><span>무료 · 설치 없음</span><span>2026년 창간</span></p>
+    <p class="masthead-top"><span>제1권 제1호</span><span class="mt-center">창간호 · 二〇二六年 十月</span><span>값 0원</span></p>
+    <p class="script-line">Would you like a clearer picture?</p>
     <a class="logo" href="index.html">화질 높이고 싶지 않으세요?</a>
     <p class="masthead-sub">흐릿한 사진을 선명하게 되살리는 작은 도구</p>
+    <p class="masthead-rule" aria-hidden="true"><span>❦</span></p>
   </header>
 
   <!-- 광고 자리 1: 상단 배너 -->
@@ -26,16 +28,19 @@
   <div class="layout">
     <main>
       <section class="intro">
+        <p class="kicker">사진 · 기술</p>
         <h1>오래된 사진, 작은 사진, 뭉개진 사진을 <br>다시 또렷하게.</h1>
-        <p>
+        <p class="lede">
           사진을 고르고 단추 하나만 누르면 됩니다. 모든 처리는 이 화면 안에서 이뤄지며,
           여러분의 사진은 어디에도 올라가지 않습니다.
         </p>
       </section>
 
       <div class="tool">
+        <p class="tool-script">Photograph Restoration</p>
+        <p class="tool-title">— 화질 개선 신청서 —</p>
         <div class="tool-row">
-          <h2 class="tool-step"><span>1</span> 사진 고르기</h2>
+          <h2 class="tool-step"><span>Ⅰ</span> 사진 고르기</h2>
           <label class="drop" id="drop">
             <input type="file" id="file" accept="image/*" hidden>
             <span id="drop-text">여기를 눌러 사진을 고르거나, 사진을 끌어다 놓으세요</span>
@@ -44,7 +49,7 @@
         </div>
 
         <div class="tool-row">
-          <h2 class="tool-step"><span>2</span> 크기</h2>
+          <h2 class="tool-step"><span>Ⅱ</span> 크기</h2>
           <div class="choices">
             <label class="choice"><input type="radio" name="scale" value="1"><span>그대로<small>화질만 개선</small></span></label>
             <label class="choice"><input type="radio" name="scale" value="2" checked><span>2배</span></label>
@@ -54,7 +59,7 @@
         </div>
 
         <div class="tool-row">
-          <h2 class="tool-step"><span>3</span> 화질</h2>
+          <h2 class="tool-step"><span>Ⅲ</span> 화질</h2>
           <div class="choices">
             <label class="choice"><input type="radio" name="quality" value="medium"><span>보통<small>빠름</small></span></label>
             <label class="choice"><input type="radio" name="quality" value="thick"><span>고화질<small>느림</small></span></label>
@@ -90,6 +95,8 @@
       <!-- 광고 자리 2: 도구 아래 (결과를 기다리는 동안 보임) -->
       <div class="ad-slot" data-ad-slot-id=""></div>
 
+      <p class="ornament" aria-hidden="true"><span class="script">Notes</span></p>
+
       <article class="info">
         <h2>사용 방법</h2>
         <ol>
@@ -115,6 +122,7 @@
   </div>
 
   <footer class="site-footer">
+    <p class="signature">Made with care by a thirteen-year-old</p>
     <p class="footer-maker">13살 학생이 직접 만들었습니다.</p>
     <p>© 2026 화질 높이고 싶지 않으세요? · 문의: <a href="mailto:seungyoon17@gmail.com">seungyoon17@gmail.com</a> · <a href="privacy.html">개인정보처리방침</a></p>
   </footer>
