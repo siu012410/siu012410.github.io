@@ -3,20 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>내 사이트</title>
-  <meta name="description" content="사이트 소개 문장을 여기에 적으세요.">
+  <title>화질 높이고 싶지 않으세요? - 무료 AI 이미지 화질·해상도 개선</title>
+  <meta name="description" content="흐릿한 사진을 AI로 선명하게. 설치·가입 없이 브라우저에서 무료로 사진 화질을 개선하고 해상도를 2배·4배 높이세요. 사진은 서버로 전송되지 않습니다.">
   <link rel="stylesheet" href="style.css">
-  <!-- 광고 설정은 ads.js 한 곳에서만 바꾸면 됩니다 -->
   <script src="ads.js" defer></script>
 </head>
 <body>
   <header class="site-header">
-    <a class="logo" href="index.html">내 사이트</a>
-    <nav>
-      <a href="index.html">홈</a>
-      <a href="upscale.html">이미지 확대</a>
-      <a href="privacy.html">개인정보처리방침</a>
-    </nav>
+    <a class="logo" href="index.html">화질 높이고 싶지 않으세요?</a>
   </header>
 
   <!-- 광고 자리 1: 상단 배너 -->
@@ -24,44 +18,86 @@
 
   <div class="layout">
     <main>
+      <h1>흐릿한 사진, AI로 선명하게</h1>
+      <p class="meta">사진은 내 컴퓨터 안에서만 처리되고 서버로 올라가지 않습니다.</p>
+
+      <div class="tool">
+        <label class="drop" id="drop">
+          <input type="file" id="file" accept="image/*" hidden>
+          <span id="drop-text">여기를 눌러 사진을 고르거나, 사진을 끌어다 놓으세요</span>
+        </label>
+
+        <div class="controls">
+          <span>크기:</span>
+          <label><input type="radio" name="scale" value="1"> 그대로 (화질만 개선)</label>
+          <label><input type="radio" name="scale" value="2" checked> 2배</label>
+          <label><input type="radio" name="scale" value="4"> 4배</label>
+        </div>
+        <div class="controls">
+          <span>화질:</span>
+          <label><input type="radio" name="quality" value="medium" checked> 보통 (빠름)</label>
+          <label><input type="radio" name="quality" value="thick"> 최고 화질 (느림, 처음에 약 30MB 다운로드)</label>
+        </div>
+        <button id="run" disabled>화질 높이기</button>
+
+        <div class="progress" id="progress" hidden>
+          <div class="bar"><div class="fill" id="fill"></div></div>
+          <span id="status">준비 중…</span>
+          <span class="notice">⚠️ 처리가 끝날 때까지 이 탭을 열어 두세요. 다른 탭으로 가면 처리가 잠시 멈춥니다.</span>
+        </div>
+
+        <div class="compare" id="compare" hidden>
+          <figure>
+            <figcaption id="before-label">원본</figcaption>
+            <img id="before" alt="원본 이미지">
+          </figure>
+          <figure>
+            <figcaption id="after-label">결과</figcaption>
+            <img id="after" alt="해상도를 높인 이미지">
+          </figure>
+        </div>
+
+        <a id="download" class="button" download hidden>결과 이미지 저장</a>
+      </div>
+
+      <!-- 광고 자리 2: 도구 아래 (결과를 기다리는 동안 보임) -->
+      <div class="ad-slot" data-ad-slot-id=""></div>
+
       <article>
-        <h1>첫 번째 글 제목</h1>
-        <p class="meta">2026-10-25 · 작성자</p>
-        <p>
-          여기에 직접 쓴 글을 넣으세요. 광고 승인을 받으려면 다른 곳에서 복사한 글이 아니라
-          직접 쓴 글이 충분히 있어야 합니다. 글 하나에 최소 몇 개의 문단을 넣는 것이 좋습니다.
-        </p>
-        <p>
-          방문자가 오래 머물수록 더 많은 페이지를 보게 되고, 그만큼 광고 노출도 늘어납니다.
-          읽을거리가 많고 다른 글로 이어지는 링크가 있으면 체류 시간이 길어집니다.
-        </p>
-
-        <!-- 광고 자리 2: 본문 중간 -->
-        <div class="ad-slot" data-ad-slot-id=""></div>
-
-        <h2>소제목</h2>
-        <p>
-          본문을 계속 이어서 작성하세요. 이미지, 목록, 표 등을 넣어도 됩니다.
-        </p>
-      </article>
-
-      <section class="more">
-        <h2>다른 글 보기</h2>
+        <h2>사용 방법</h2>
+        <ol>
+          <li>해상도를 높일 사진을 고릅니다.</li>
+          <li>크기를 고릅니다. "그대로"는 크기는 두고 흐림과 노이즈만 줄이고, 2배·4배는 크게 키웁니다.</li>
+          <li>화질을 고릅니다. "최고 화질"은 더 선명하지만 훨씬 오래 걸립니다.</li>
+          <li>"화질 높이기"를 누르고 기다린 뒤 결과를 저장합니다.</li>
+        </ol>
+        <h2>알아 두면 좋은 점</h2>
         <ul>
-          <li><a href="#">두 번째 글 (나중에 페이지를 추가하세요)</a></li>
-          <li><a href="#">세 번째 글</a></li>
+          <li>처음 한 번은 AI 모델을 내려받느라 시간이 조금 더 걸립니다.</li>
+          <li>사진이 클수록 오래 걸립니다. 1000픽셀이 넘는 사진은 미리 줄여서 올리면 더 빠릅니다.</li>
+          <li>컴퓨터 성능(그래픽카드)에 따라 속도 차이가 큽니다.</li>
+          <li>처리 중에 다른 탭으로 가거나 창을 최소화하면 처리가 멈췄다가, 돌아오면 이어서 진행됩니다.</li>
         </ul>
-      </section>
+      </article>
     </main>
 
     <aside>
-      <!-- 광고 자리 3: 사이드바 (PC 화면에서만 옆에 보임) -->
+      <!-- 광고 자리 3: 사이드바 -->
       <div class="ad-slot" data-ad-slot-id=""></div>
     </aside>
   </div>
 
   <footer class="site-footer">
-    <p>© 2026 내 사이트 · <a href="privacy.html">개인정보처리방침</a></p>
+    <p>© 2026 화질 높이고 싶지 않으세요? · 문의: <a href="mailto:seungyoon17@gmail.com">seungyoon17@gmail.com</a> · <a href="privacy.html">개인정보처리방침</a></p>
   </footer>
+
+  <!-- AI 확대 라이브러리 (UpscalerJS + TensorFlow.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.11.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/upscaler@1.0.0/dist/browser/umd/upscaler.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@upscalerjs/esrgan-medium@1.0.0/dist/umd/models/esrgan-medium/src/x2/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@upscalerjs/esrgan-medium@1.0.0/dist/umd/models/esrgan-medium/src/x4/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@upscalerjs/esrgan-thick@1.0.0/dist/umd/models/esrgan-thick/src/x2/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@upscalerjs/esrgan-thick@1.0.0/dist/umd/models/esrgan-thick/src/x4/index.min.js"></script>
+  <script src="upscale.js"></script>
 </body>
 </html>
