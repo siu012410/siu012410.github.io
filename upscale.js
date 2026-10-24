@@ -15,7 +15,6 @@
   const download = document.getElementById('download');
   const stage = document.getElementById('stage');
   const slider = document.getElementById('slider');
-  const tool = document.querySelector('.tool');
 
   // 비교 슬라이더: 막대 왼쪽은 원본, 오른쪽은 결과
   slider.addEventListener('input', function () {
@@ -158,7 +157,7 @@
     runBtn.disabled = true;
     progress.hidden = false;
     fill.style.width = '0%';
-    status.textContent = 'AI 모델 불러오는 중… (처음 한 번만 오래 걸려요)';
+    status.textContent = '준비 중… (처음 한 번만 오래 걸려요)';
 
     try {
       // 화면에 표시된 크기가 아니라 원본 크기로 처리하도록 img 요소 대신 src를 넘김
@@ -197,10 +196,7 @@
       slider.value = 50;
       stage.style.setProperty('--pos', '50%');
       stage.classList.add('has-result');
-      tool.classList.remove('done-pop');
-      void tool.offsetWidth; // 애니메이션 다시 시작
-      tool.classList.add('done-pop');
-      status.textContent = '🎉 완료!';
+      status.textContent = '완료되었습니다.';
     } catch (err) {
       console.error(err);
       status.textContent = '오류가 났어요. 사진을 더 작게 줄여서 다시 시도해 보세요.';
