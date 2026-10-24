@@ -53,11 +53,19 @@
     return upscalers[key];
   }
 
+  // 이미지 불러오기 (img.decode()는 화면이 가려진 탭에서 끝나지 않을 수 있어 onload 사용)
+  function loadImage(src) {
+    return new Promise(function (resolve, reject) {
+      const img = new Image();
+      img.onload = function () { resolve(img); };
+      img.onerror = reject;
+      img.src = src;
+    });
+  }
+
   // 언샤프 마스크: 흐린 사본과의 차이를 더해 윤곽을 또렷하게
   async function sharpen(dataUrl, amount) {
-    const img = new Image();
-    img.src = dataUrl;
-    await img.decode();
+    const img = await loadImage(dataUrl);
     const w = img.naturalWidth;
     const h = img.naturalHeight;
     const canvas = document.createElement('canvas');
@@ -91,9 +99,7 @@
 
   // AI로 키운 이미지를 원본 크기로 다시 줄임 (흐림·노이즈만 줄어든 효과)
   async function resizeTo(dataUrl, width, height) {
-    const img = new Image();
-    img.src = dataUrl;
-    await img.decode();
+    const img = await loadImage(dataUrl);
     const canvas = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
